@@ -1,5 +1,5 @@
-const userScore = 0;
-const computerScore = 0;
+let userScore = 0;
+var computerScore = 0;
 const userScore_span = document.getElementById("user-score");
 const compScore_span = document.getElementById("comp-score");
 const scoreBoard_div = document.querySelector(".score-board");
@@ -13,23 +13,45 @@ function getComputerChoice() {
   return choices[Math.floor(Math.random() * 3)];
 }
 
+function win(userChoice, computerChoice) {
+  userScore++;
+  userScore_span.innerHTML = userScore;
+  const smallUserWord = "user".fontsize(3).sub();
+  const smallCompWord = "comp".fontsize(3).sub();
+  result_div.innerHTML = `${userChoice.toUpperCase()}${smallUserWord} beats ${computerChoice.toUpperCase()}${smallCompWord}. You win`;
+}
+
+function lose(userChoice, computerChoice) {
+  computerScore++;
+  compScore_span.innerHTML = computerScore;
+  const smallUserWord = "user".fontsize(3).sub();
+  const smallCompWord = "comp".fontsize(3).sub();
+  result_div.innerHTML = `${computerChoice.toUpperCase()}${smallCompWord} beats ${userChoice.toUpperCase()}${smallUserWord}. You lose`;
+}
+
+function draw(userChoice, computerChoice) {
+  const smallUserWord = "user".fontsize(3).sub();
+  const smallCompWord = "comp".fontsize(3).sub();
+  result_div.innerHTML = `${userChoice.toUpperCase()}${smallUserWord} equals ${computerChoice.toUpperCase()}${smallCompWord}. It's a draw`;
+}
+
 function game(userChoice) {
   const computerChoice = getComputerChoice();
-  switch (userChoice + computerScore) {
-    case "rs":
-    case "pr":
-    case "sp":
-      console.log("User Wins");
+  switch (userChoice + " vs " + computerChoice) {
+    case "rock vs scissors":
+    case "paper vs rock":
+    case "scissors vs paper":
+      win(userChoice, computerChoice);
       break;
-    case "rp":
-    case "ps":
-    case "sr":
-      console.log("User Loses");
+    case "rock vs paper":
+    case "paper vs scissors":
+    case "scissors vs rock":
+      lose(userChoice, computerChoice);
       break;
-    case "rr":
-    case "pp":
-    case "ss":
-      console.log("Draw");
+    case "rock vs rock":
+    case "paper vs paper":
+    case "scissor vs scissors":
+      draw(userChoice, computerChoice);
       break;
   }
 }
